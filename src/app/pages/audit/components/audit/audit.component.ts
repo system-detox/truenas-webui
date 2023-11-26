@@ -14,7 +14,7 @@ import { filter, map, of } from 'rxjs';
 import { AuditEvent, auditEventLabels } from 'app/enums/audit-event.enum';
 import { getLogImportantData } from 'app/helpers/get-log-important-data.helper';
 import { WINDOW } from 'app/helpers/window.helper';
-import { AuditEntry } from 'app/interfaces/audit.interface';
+import { AuditEntry, SmbAuditEntry } from 'app/interfaces/audit.interface';
 import { ApiDataProvider } from 'app/modules/ix-table2/classes/api-data-provider/api-data-provider';
 import { PaginationServerSide } from 'app/modules/ix-table2/classes/api-data-provider/pagination-server-side.class';
 import { SortingServerSide } from 'app/modules/ix-table2/classes/api-data-provider/sorting-server-side.class';
