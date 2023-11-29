@@ -40,7 +40,7 @@ describe('IfUserHasRolesDirective', () => {
     });
 
     it('renders components for a Full Admin role', () => {
-      directive.ixIfUserHasRoles = [Role.DatasetWrite];
+      directive.ixHasRoles = [Role.DatasetWrite];
       expect(viewContainerRefMock.clear).toHaveBeenCalled();
       expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
     });
@@ -61,7 +61,7 @@ describe('IfUserHasRolesDirective', () => {
     });
 
     it('not rendering components when user has no roles', () => {
-      directive.ixIfUserHasRoles = [Role.DatasetWrite];
+      directive.ixHasRoles = [Role.DatasetWrite];
       expect(viewContainerRefMock.clear).toHaveBeenCalled();
       expect(viewContainerRefMock.createEmbeddedView).not.toHaveBeenCalled();
     });
@@ -82,7 +82,7 @@ describe('IfUserHasRolesDirective', () => {
     });
 
     it('not rendering components when empty roles to check provided', () => {
-      directive.ixIfUserHasRoles = [];
+      directive.ixHasRoles = [];
       expect(viewContainerRefMock.clear).toHaveBeenCalled();
       expect(viewContainerRefMock.createEmbeddedView).not.toHaveBeenCalled();
     });
@@ -103,13 +103,13 @@ describe('IfUserHasRolesDirective', () => {
     });
 
     it('renders component because of ReplicationTaskWrite role when only ReplicationTaskRead is required', () => {
-      directive.ixIfUserHasRoles = [Role.ReplicationTaskRead];
+      directive.ixHasRoles = [Role.ReplicationTaskRead];
       expect(viewContainerRefMock.clear).toHaveBeenCalled();
       expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
     });
 
     it('not rendering component because of SharingNfsWrite role expected but user has SharingNfsRead only', () => {
-      directive.ixIfUserHasRoles = [Role.SharingNfsWrite];
+      directive.ixHasRoles = [Role.SharingNfsWrite];
       expect(viewContainerRefMock.clear).toHaveBeenCalled();
       expect(viewContainerRefMock.createEmbeddedView).not.toHaveBeenCalled();
     });

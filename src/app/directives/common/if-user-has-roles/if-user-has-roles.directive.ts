@@ -82,11 +82,11 @@ function resolveRoles(inputRoles: Role[]): Role[] {
 }
 
 @UntilDestroy()
-@Directive({ selector: '[ixIfUserHasRoles]' })
+@Directive({ selector: '[ixHasRoles]' })
 export class IfUserHasRolesDirective {
   private currentUserRoles: Role[] = [];
 
-  @Input() set ixIfUserHasRoles(roles: Role[]) {
+  @Input() set ixHasRoles(roles: Role[]) {
     this.viewContainer.clear();
 
     if (this.checkRoles(roles)) {
