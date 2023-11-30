@@ -5,8 +5,10 @@ import { Validators } from '@angular/forms';
 import { FormBuilder } from '@ngneat/reactive-forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, map } from 'rxjs';
-import { Role, roleNames } from 'app/enums/role.enum';
+import {
+  Observable, map, share,
+} from 'rxjs';
+import { Role } from 'app/enums/role.enum';
 import { Group } from 'app/interfaces/group.interface';
 import { Privilege, PrivilegeUpdate } from 'app/interfaces/privilege.interface';
 import { ChipsProvider } from 'app/modules/ix-forms/components/ix-chips/chips-provider';
@@ -44,9 +46,8 @@ export class PrivilegeFormComponent implements OnInit {
   }
 
   readonly rolesOptions$ = this.ws.call('privilege.roles').pipe(
-    map((roles) => roles.map((role) => ({
-      label: this.translate.instant(roleNames.get(role.name)), value: role.name,
-    }))),
+    map((roles) => roles.map((role) => ({ label: this.translate.instant(role.name), value: role.name }))),
+    share(),
   );
 
   readonly localGroupsProvider: ChipsProvider = (query: string) => {
