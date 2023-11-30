@@ -57,6 +57,11 @@ export class AuthService {
     switchMap(([isConnected, isLoggedIn]) => {
       return of(isConnected && isLoggedIn);
     }),
+    tap((condition) => {
+      if (!condition) {
+        this.loggedInUser$.next(null);
+      }
+    }),
   );
 
   readonly user$ = this.loggedInUser$.asObservable();
