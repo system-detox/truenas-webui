@@ -15,6 +15,7 @@ import { ChipsProvider } from 'app/modules/ix-forms/components/ix-chips/chips-pr
 import { IxSlideInRef } from 'app/modules/ix-forms/components/ix-slide-in/ix-slide-in-ref';
 import { SLIDE_IN_DATA } from 'app/modules/ix-forms/components/ix-slide-in/ix-slide-in.token';
 import { FormErrorHandlerService } from 'app/modules/ix-forms/services/form-error-handler.service';
+import { AuthService } from 'app/services/auth/auth.service';
 import { WebSocketService } from 'app/services/ws.service';
 
 @UntilDestroy()
@@ -75,6 +76,7 @@ export class PrivilegeFormComponent implements OnInit {
     private translate: TranslateService,
     private ws: WebSocketService,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService,
     private errorHandler: FormErrorHandlerService,
     private slideInRef: IxSlideInRef<PrivilegeFormComponent>,
     @Inject(SLIDE_IN_DATA) private existingPrivilege: Privilege,
@@ -113,6 +115,7 @@ export class PrivilegeFormComponent implements OnInit {
     request$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
         this.isLoading = false;
+        this.authService.getLoggedInUserInformation();
         this.slideInRef.close(true);
         this.cdr.markForCheck();
       },
