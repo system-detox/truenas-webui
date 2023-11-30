@@ -84,13 +84,20 @@ function resolveRoles(inputRoles: Role[]): Role[] {
 @UntilDestroy()
 @Directive({ selector: '[ixHasRoles]' })
 export class IfUserHasRolesDirective {
-  private currentUserRoles: Role[] = [];
+  private currentUserRoles: Role[] = null;
+  private rolesToBeChecked: Role[] = [];
+  private alreadyChecked = false;
 
   @Input() set ixHasRoles(roles: Role[]) {
-    this.viewContainer.clear();
+    this.rolesToBeChecked = roles;
+    this.createViewIfHasRoles();
+  }
 
-    if (this.checkRoles(roles)) {
+  createViewIfHasRoles(): void {
+    this.viewContainer.clear();
+    if (this.checkRoles()) {
       this.viewContainer.createEmbeddedView(this.templateRef);
+      this.cdr.markForCheck();
     }
   }
 
@@ -100,21 +107,32 @@ export class IfUserHasRolesDirective {
     private cdr: ChangeDetectorRef,
     private authService: AuthService,
   ) {
-    this.authService.user$.pipe(untilDestroyed(this)).subscribe((user) => {
+    this.authService.user$.pipe(
+      untilDestroyed(this),
+    ).subscribe((user) => {
+      if (!user) {
+        this.currentUserRoles = null;
+        return;
+      }
       this.currentUserRoles = resolveRoles(user.roles);
+      if (!this.alreadyChecked) {
+        this.createViewIfHasRoles();
+      }
       this.cdr.markForCheck();
     });
   }
 
-  private checkRoles(roles: Role[]): boolean {
-    if (!roles?.length || !this.currentUserRoles?.length) {
+  private checkRoles(): boolean {
+    if (!this.rolesToBeChecked?.length || !this.currentUserRoles?.length) {
       return false;
     }
+
+    this.alreadyChecked = true;
 
     if (this.currentUserRoles.includes(Role.FullAdmin)) {
       return true;
     }
 
-    return roles.every((role) => this.currentUserRoles.includes(role));
+    return this.rolesToBeChecked.every((role) => this.currentUserRoles.includes(role));
   }
 }
