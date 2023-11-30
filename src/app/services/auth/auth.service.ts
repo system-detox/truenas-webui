@@ -57,11 +57,6 @@ export class AuthService {
     switchMap(([isConnected, isLoggedIn]) => {
       return of(isConnected && isLoggedIn);
     }),
-    tap((condition) => {
-      if (!condition) {
-        this.loggedInUser$.next(null);
-      }
-    }),
   );
 
   readonly user$ = this.loggedInUser$.asObservable();
@@ -142,12 +137,15 @@ export class AuthService {
           this.store$.dispatch(adminUiInitialized());
           this.getLoggedInUserInformation();
           this.setupPeriodicTokenGeneration();
-        } else if (this.generateTokenSubscription) {
-          this.latestTokenGenerated$?.complete();
-          this.latestTokenGenerated$ = new ReplaySubject<string>(1);
-          this.setupTokenUpdate();
-          this.generateTokenSubscription.unsubscribe();
-          this.generateTokenSubscription = null;
+        } else {
+          this.loggedInUser$.next(null);
+          if (this.generateTokenSubscription) {
+            this.latestTokenGenerated$?.complete();
+            this.latestTokenGenerated$ = new ReplaySubject<string>(1);
+            this.setupTokenUpdate();
+            this.generateTokenSubscription.unsubscribe();
+            this.generateTokenSubscription = null;
+          }
         }
       },
     });
