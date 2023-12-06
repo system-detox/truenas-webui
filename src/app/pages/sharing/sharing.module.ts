@@ -32,6 +32,8 @@ import { TestIdModule } from 'app/modules/test-id/test-id.module';
 import { TooltipModule } from 'app/modules/tooltip/tooltip.module';
 import { IscsiCardComponent } from 'app/pages/sharing/components/shares-dashboard/iscsi-card/iscsi-card.component';
 import { NfsCardComponent } from 'app/pages/sharing/components/shares-dashboard/nfs-card/nfs-card.component';
+import { NfsServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/nfs-service-extra-actions/nfs-service-extra-actions.component';
+import { SmbServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/smb-service-extra-actions/smb-service-extra-actions.component';
 import { SmbCardComponent } from 'app/pages/sharing/components/shares-dashboard/smb-card/smb-card.component';
 import { AuthorizedAccessFormComponent } from 'app/pages/sharing/iscsi/authorized-access/authorized-access-form/authorized-access-form.component';
 import { AuthorizedAccessListComponent } from 'app/pages/sharing/iscsi/authorized-access/authorized-access-list/authorized-access-list.component';
@@ -136,6 +138,8 @@ import { SmbStatusComponent } from './smb/smb-status/smb-status.component';
     NfsCardComponent,
     IscsiCardComponent,
     ServiceExtraActionsComponent,
+    SmbServiceExtraActionsComponent,
+    NfsServiceExtraActionsComponent,
     ServiceStateButtonComponent,
     SmbSessionListComponent,
     SmbLockListComponent,

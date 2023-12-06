@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, tap } from 'rxjs';
+import { ServiceName } from 'app/enums/service-name.enum';
 import { shared } from 'app/helptext/sharing';
 import { NfsShare } from 'app/interfaces/nfs-share.interface';
 import { WebsocketError } from 'app/interfaces/websocket-error.interface';
@@ -20,6 +22,8 @@ import { DialogService } from 'app/services/dialog.service';
 import { ErrorHandlerService } from 'app/services/error-handler.service';
 import { IxSlideInService } from 'app/services/ix-slide-in.service';
 import { WebSocketService } from 'app/services/ws.service';
+import { ServicesState } from 'app/store/services/services.reducer';
+import { selectService } from 'app/store/services/services.selectors';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +32,8 @@ import { WebSocketService } from 'app/services/ws.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NfsListComponent implements OnInit {
+  service$ = this.store$.select(selectService(ServiceName.Nfs));
+
   filterString = '';
   dataProvider: AsyncDataProvider<NfsShare>;
 
@@ -129,6 +135,7 @@ export class NfsListComponent implements OnInit {
     private slideInService: IxSlideInService,
     private cdr: ChangeDetectorRef,
     protected emptyService: EmptyService,
+    private store$: Store<ServicesState>,
   ) {}
 
   ngOnInit(): void {

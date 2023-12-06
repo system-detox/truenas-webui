@@ -1,0 +1,14 @@
+<button
+  mat-menu-item
+  [ixTest]="['smb', 'actions-menu', 'sessions']"
+  (click)="viewSessions()"
+>
+  {{ 'SMB Sessions' | translate }}
+</button>
+<button
+  mat-menu-item
+  [ixTest]="['smb', 'actions-menu', 'logs']"
+  (click)="viewLogs()"
+>
+  {{ 'Audit Logs' | translate }}
+</button>

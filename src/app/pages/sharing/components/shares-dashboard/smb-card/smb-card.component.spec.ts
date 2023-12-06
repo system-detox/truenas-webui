@@ -19,6 +19,7 @@ import { IxTable2Harness } from 'app/modules/ix-table2/components/ix-table2/ix-t
 import { IxTable2Module } from 'app/modules/ix-table2/ix-table2.module';
 import { AppLoaderModule } from 'app/modules/loader/app-loader.module';
 import { ServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/service-extra-actions.component';
+import { SmbServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/smb-service-extra-actions/smb-service-extra-actions.component';
 import { ServiceStateButtonComponent } from 'app/pages/sharing/components/shares-dashboard/service-state-button/service-state-button.component';
 import { SmbCardComponent } from 'app/pages/sharing/components/shares-dashboard/smb-card/smb-card.component';
 import { SmbFormComponent } from 'app/pages/sharing/smb/smb-form/smb-form.component';
@@ -74,6 +75,7 @@ describe('SmbCardComponent', () => {
       MockComponents(
         ServiceStateButtonComponent,
         ServiceExtraActionsComponent,
+        SmbServiceExtraActionsComponent,
       ),
     ],
     providers: [

@@ -22,21 +22,6 @@
     >
       {{ configServiceLabel | translate }}
     </button>
-    <button
-      *ngIf="hasSessions"
-      mat-menu-item
-      [ixTest]="[service?.service, 'actions-menu', 'sessions']"
-      (click)="viewSessions(service.service)"
-    >
-      {{ '{name} Sessions' | translate: { name: serviceNames.get(service.service) } }}
-    </button>
-    <button
-      *ngIf="hasLogs"
-      mat-menu-item
-      [ixTest]="[service?.service, 'actions-menu', 'logs']"
-      (click)="viewLogs()"
-    >
-      {{ 'Audit Logs' | translate }}
-    </button>
+    <ng-content></ng-content>
   </mat-menu>
 </div>

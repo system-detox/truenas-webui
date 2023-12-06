@@ -26,10 +26,9 @@
         (click)="openForm()"
       >{{ 'Add' | translate }}</button>
 
-      <ix-service-extra-actions
-        *ngIf="!isClustered"
-        [service]="service$ | async"
-      ></ix-service-extra-actions>
+      <ix-service-extra-actions *ngIf="!isClustered" [service]="service$ | async">
+        <ix-smb-extra-actions></ix-smb-extra-actions>
+      </ix-service-extra-actions>
     </div>
   </mat-toolbar-row>
 

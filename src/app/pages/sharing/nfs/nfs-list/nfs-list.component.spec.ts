@@ -2,9 +2,15 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { Spectator, createComponentFactory, mockProvider } from '@ngneat/spectator/jest';
+import { provideMockStore } from '@ngrx/store/testing';
+import { MockComponents } from 'ng-mocks';
 import { of, pipe } from 'rxjs';
 import { mockCall, mockWebsocket } from 'app/core/testing/utils/mock-websocket.utils';
+import { ServiceName } from 'app/enums/service-name.enum';
+import { ServiceStatus } from 'app/enums/service-status.enum';
 import { NfsShare } from 'app/interfaces/nfs-share.interface';
+import { Service } from 'app/interfaces/service.interface';
+import { AppCommonModule } from 'app/modules/common/app-common.module';
 import { IxSlideInRef } from 'app/modules/ix-forms/components/ix-slide-in/ix-slide-in-ref';
 import { IxIconHarness } from 'app/modules/ix-icon/ix-icon.harness';
 import { IxTable2Harness } from 'app/modules/ix-table2/components/ix-table2/ix-table2.harness';
@@ -12,12 +18,15 @@ import { IxTable2Module } from 'app/modules/ix-table2/ix-table2.module';
 import { EmptyService } from 'app/modules/ix-tables/services/empty.service';
 import { AppLoaderModule } from 'app/modules/loader/app-loader.module';
 import { AppLoaderService } from 'app/modules/loader/app-loader.service';
+import { NfsServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/nfs-service-extra-actions/nfs-service-extra-actions.component';
+import { ServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/service-extra-actions.component';
 import { NfsFormComponent } from 'app/pages/sharing/nfs/nfs-form/nfs-form.component';
 import { NfsListComponent } from 'app/pages/sharing/nfs/nfs-list/nfs-list.component';
 import { DialogService } from 'app/services/dialog.service';
 import { ErrorHandlerService } from 'app/services/error-handler.service';
 import { IxSlideInService } from 'app/services/ix-slide-in.service';
 import { WebSocketService } from 'app/services/ws.service';
+import { selectServices } from 'app/store/services/services.selectors';
 
 const shares: Partial<NfsShare>[] = [
   {
@@ -40,6 +49,13 @@ describe('NfsListComponent', () => {
     imports: [
       IxTable2Module,
       AppLoaderModule,
+      AppCommonModule,
+    ],
+    declarations: [
+      MockComponents(
+        ServiceExtraActionsComponent,
+        NfsServiceExtraActionsComponent,
+      ),
     ],
     providers: [
       mockProvider(AppLoaderService),
@@ -59,6 +75,19 @@ describe('NfsListComponent', () => {
       }),
       mockProvider(IxSlideInService, {
         open: jest.fn(() => ({ slideInClosed$: of(true) })),
+      }),
+      provideMockStore({
+        selectors: [
+          {
+            selector: selectServices,
+            value: [{
+              id: 4,
+              service: ServiceName.Nfs,
+              state: ServiceStatus.Stopped,
+              enable: false,
+            } as Service],
+          },
+        ],
       }),
     ],
   });

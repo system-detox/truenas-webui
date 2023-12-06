@@ -19,6 +19,7 @@ import { IxTable2Harness } from 'app/modules/ix-table2/components/ix-table2/ix-t
 import { IxTable2Module } from 'app/modules/ix-table2/ix-table2.module';
 import { AppLoaderModule } from 'app/modules/loader/app-loader.module';
 import { NfsCardComponent } from 'app/pages/sharing/components/shares-dashboard/nfs-card/nfs-card.component';
+import { NfsServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/nfs-service-extra-actions/nfs-service-extra-actions.component';
 import { ServiceExtraActionsComponent } from 'app/pages/sharing/components/shares-dashboard/service-extra-actions/service-extra-actions.component';
 import { ServiceStateButtonComponent } from 'app/pages/sharing/components/shares-dashboard/service-state-button/service-state-button.component';
 import { NfsFormComponent } from 'app/pages/sharing/nfs/nfs-form/nfs-form.component';
@@ -62,6 +63,7 @@ describe('NfsCardComponent', () => {
       MockComponents(
         ServiceStateButtonComponent,
         ServiceExtraActionsComponent,
+        NfsServiceExtraActionsComponent,
       ),
     ],
     providers: [

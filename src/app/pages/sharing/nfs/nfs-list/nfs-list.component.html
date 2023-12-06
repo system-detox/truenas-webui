@@ -8,6 +8,10 @@
       <button mat-button color="primary" ixTest="add-nfs-share" (click)="doAdd()">
         {{ 'Add' | translate }}
       </button>
+
+      <ix-service-extra-actions [service]="service$ | async">
+        <ix-nfs-extra-actions></ix-nfs-extra-actions>
+      </ix-service-extra-actions>
     </div>
   </mat-toolbar-row>
   <mat-card-content>

@@ -19,7 +19,9 @@
         (click)="openForm()"
       >{{ 'Add' | translate }}</button>
 
-      <ix-service-extra-actions [service]="service$ | async"></ix-service-extra-actions>
+      <ix-service-extra-actions [service]="service$ | async">
+        <ix-nfs-extra-actions></ix-nfs-extra-actions>
+      </ix-service-extra-actions>
     </div>
   </mat-toolbar-row>
 
