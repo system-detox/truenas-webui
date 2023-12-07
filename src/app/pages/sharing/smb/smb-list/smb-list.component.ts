@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
 import { take } from 'rxjs/operators';
+import { ServiceName } from 'app/enums/service-name.enum';
 import { shared, helptextSharingSmb } from 'app/helptext/sharing';
 import vol_helptext from 'app/helptext/storage/volumes/volume-list';
 import { SmbShare } from 'app/interfaces/smb-share.interface';
@@ -17,10 +19,16 @@ import { DialogService } from 'app/services/dialog.service';
 import { ErrorHandlerService } from 'app/services/error-handler.service';
 import { IxSlideInService } from 'app/services/ix-slide-in.service';
 import { WebSocketService } from 'app/services/ws.service';
+import { ServicesState } from 'app/store/services/services.reducer';
+import { selectService } from 'app/store/services/services.selectors';
 
 @UntilDestroy()
 @Component({
-  template: '<ix-entity-table [title]="title" [conf]="this"></ix-entity-table>',
+  template: `
+    <!-- TODO: Add menu to component after refactoring -->
+    <!-- <ix-service-extra-actions *ngIf="!isClustered" [service]="service$ | async"><ix-smb-extra-actions></ix-smb-extra-actions></ix-service-extra-actions> -->
+    <ix-entity-table [title]="title" [conf]="this"></ix-entity-table>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SmbListComponent implements EntityTableConfig<SmbShare> {
@@ -70,6 +78,8 @@ export class SmbListComponent implements EntityTableConfig<SmbShare> {
     buildTitle: (share: SmbShare) => `${this.translate.instant('Unshare')} ${share.name}`,
   };
 
+  service$ = this.store$.select(selectService(ServiceName.Cifs));
+
   constructor(
     private errorHandler: ErrorHandlerService,
     private ws: WebSocketService,
@@ -78,6 +88,7 @@ export class SmbListComponent implements EntityTableConfig<SmbShare> {
     private dialogService: DialogService,
     private translate: TranslateService,
     private appLoader: AppLoaderService,
+    private store$: Store<ServicesState>,
   ) {}
 
   preInit(entityList: EntityTableComponent<SmbShare>): void {
